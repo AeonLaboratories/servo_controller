@@ -192,6 +192,10 @@
 
 ///////////////////////////////////////////////////////
 // ADC configuration
+// ADC_SETTLING_TIME reserves time for the adc switching
+// network to stabilize after a new ADC channel is
+// selected.
+#define ADC_SETTLING_TIME		17
 #define ADC_CTL0_INIT				(ADC_CONT | ADC_CEN)	// continuous mode
 //#undef ADC_CTL0_INIT										// one-shot mode
 

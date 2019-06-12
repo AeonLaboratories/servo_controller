@@ -17,19 +17,19 @@
 
 // Store big strings in ROM to conserve RData and EData space.
 rom char FIRMWARE[]	= R"Aeon Laboratories SC64 ";
-rom char VERSION[]	= R"V.20170515-0000";
+rom char VERSION[]	= R"V.20171221-0000";
 
-#define SERNO					4
+#define SERNO					9
 
 // Compensation values (consolidated) for pre-amps & ADC
 // To calibrate, set Gain to 1.0 and Offset to 0.0
 //
 
 #if SERNO == 0
-#define ADC_OFFSET				1		// what ADC reports when the input is 0V.
-#define A1_GAIN					2.5065	// SERVO_I
-#define A1_OFFSET				8.3333
-#define A2_GAIN					2.0639	// SERVO_V
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.0000	// SERVO_I
+#define A1_OFFSET				0.0
+#define A2_GAIN					1.0000	// SERVO_V
 #define A2_OFFSET				0.0
 #endif
 
@@ -84,6 +84,41 @@ rom char VERSION[]	= R"V.20170515-0000";
 #define A2_OFFSET				0.0
 #endif
 
+////// Aeon Bench Test Servo Controller (PN DC-A)
+#if SERNO == 6
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					0.5486	// SERVO_I
+#define A1_OFFSET				-5.4
+#define A2_GAIN					1.9180	// SERVO_V
+#define A2_OFFSET				379.5
+#endif
+
+////// USGS CEGS 1 Servo Controller (PN DC-A)
+#if SERNO == 7
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.1804	// SERVO_I
+#define A1_OFFSET				88
+#define A2_GAIN					4.2857	// SERVO_V
+#define A2_OFFSET				1933.7
+#endif
+
+////// Purdue CEGS 1 Servo Controller (PN DC-A)
+#if SERNO == 8
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.2109	// SERVO_I
+#define A1_OFFSET				96.2
+#define A2_GAIN					6.0919	// SERVO_V
+#define A2_OFFSET				2007.5
+#endif
+
+////// Dalhousie Servo Controller (PN DC-A)
+#if SERNO == 9
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					0.8871	// SERVO_I
+#define A1_OFFSET				101.0
+#define A2_GAIN					3.1667	// SERVO_V
+#define A2_OFFSET				1288.6
+#endif
 
 #define CHANNELS				64
 #define CHANNEL_NONE			(CHANNELS-1)	// last channel 'none' until ADDR_EN added to hardware
@@ -91,9 +126,9 @@ rom char VERSION[]	= R"V.20170515-0000";
 #define CURRENT_MAX				5000	// milliamps
 #define TIMEOUT_MAX				30000	// in 100ths; 300 seconds = five minutes
 
-#define V_MIN					5000	// millivolts
+#define V_MIN					4500	// millivolts
 
-#define SKIP_INRUSH				50		// 100ths of a second ('elapsed' units)
+#define SKIP_INRUSH				10		// 100ths of a second ('elapsed' units)
 
 
 // The CO_MAX_RESERVE provides time for the "stop pulse"
@@ -282,21 +317,20 @@ reentrant void doNothing() {}
 ///////////////////////////////////////////////////////
 reentrant void selectCommandedChannel()
 {
-	uint8_t ta, tb, tc;	// workspaces for bit manipulations
-	ta = PAIN & 0xF1;	// clear ADDR bits in PA (xxxx210x)
-	tb = PBIN & 0xFE;	// clear ADDR bits in PB (xxxxxxx3)
-	tc = PCIN & 0xF3;	// clear ADDR bits in PC (xxxx45xx)
+	uint8_t ta, tc;	// workspaces for bit manipulations
+	ta = PAIN & 0x3F;	// clear ADDR bits in PA (54xxxxxx)
+	tc = PCIN & 0xF0;	// clear ADDR bits in PC (xxxx3210)
 
-	mask_set(ta, (CommandedChannel & 0x07) << 1);	// select and move PA bits of ADDR (xxxxx321)
-	mask_set(tb, (CommandedChannel & 0x08) >> 3);	// select and move PB bits of ADDR (xxxx0xxx)
-	mask_set(tc, ((CommandedChannel & 0x20) >> 3) | ((CommandedChannel & 0x10) >> 1) );  	// select and move PC bits of ADDR (xx23xxxx)
+	mask_set(ta, (CommandedChannel & 0x30) << 2);	// select and move PA bits of ADDR (54xxxxxx)
+	mask_set(tc, (CommandedChannel & 0x0F));  	// select and move PC bits of ADDR (xxxx3210)
 
 	// SERVO_CP must be low when changing channel to minimize twitching
+	ADDR_EN_low();
 	SERVO_CP_low();
 	PAOUT = ta;
-	PBOUT = tb;
 	PCOUT = tc;
 	SERVO_CP_high();
+	ADDR_EN_high();
 
 	Channel = CommandedChannel;
 }
@@ -373,9 +407,9 @@ void check_adc()
 {
 	static uint8_t achIndex;
 	int adcd;
-	if (AdcdReads < 17) return;
+	if (AdcdSettling) return;
 	
-	adcd = Adcd;
+	adcd = ADCD;
 	if (ADCD_VALID(adcd))
 		adcd = (adcd >> 3) - ADC_OFFSET;
 	else
@@ -477,12 +511,17 @@ void do_commands()
 
 			if (c == 'n')					// select channel
 			{				
-				CpEnabled = FALSE;		// disable output
-				GoCommanded = FALSE;
-				
 				n = tryArg(0, CHANNELS - 1, ERROR_CHANNEL, Channel, FALSE);
 				if (!(Error & ERROR_CHANNEL))
+				{
 					CommandedChannel = n;
+				
+					CpEnabled = FALSE;			// disable output
+					GoCommanded = FALSE;
+					
+					Milliamps = 0;
+					Elapsed = 0;
+				}
 			}
 			else if (c == 'r')				// report
 			{
@@ -600,7 +639,7 @@ void isr_timer1()
 // ADC read complete...
 #pragma interrupt
 void isr_adc()
-{ 
-	Adcd = ADCD;
-	++AdcdReads;
+{
+	if (AdcdSettling)
+		--AdcdSettling;
 }
