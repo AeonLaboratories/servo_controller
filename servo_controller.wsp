@@ -6,9 +6,6 @@ ptn_Child1=ChildFrames
 
 [WorkState_v1_2.Frames.ChildFrames]
 ptn_Child1=Document-0
-ptn_Child2=Document-1
-ptn_Child3=Document-2
-ptn_Child4=Document-3
 
 [WorkState_v1_2.Frames.ChildFrames.Document-0]
 ptn_Child1=ViewFrame-0
@@ -17,40 +14,9 @@ ptn_Child1=ViewFrame-0
 DocPathName=src\irq.c
 DocTemplateIndex=0
 DocumentString=IDE.Document
-IsActiveChildFrame=False
-IsFrameVisible=True
-WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPAAAAAAAAAAAAAAAAMADAAAAADMBAAAAA
-
-[WorkState_v1_2.Frames.ChildFrames.Document-1]
-ptn_Child1=ViewFrame-0
-
-[WorkState_v1_2.Frames.ChildFrames.Document-1.ViewFrame-0]
-DocPathName=include\gpio.h
-DocTemplateIndex=0
-DocumentString=IDE.Document
-IsActiveChildFrame=False
-IsFrameVisible=True
-WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPEOPPPPPPOCAAAAAAOCAAAAAAPODAAAAAHGBAAAAA
-
-[WorkState_v1_2.Frames.ChildFrames.Document-2]
-ptn_Child1=ViewFrame-0
-
-[WorkState_v1_2.Frames.ChildFrames.Document-2.ViewFrame-0]
-DocPathName=include\config.h
-DocTemplateIndex=0
-DocumentString=IDE.Document
-IsActiveChildFrame=False
-IsFrameVisible=True
-WindowPlacement=MCAAAAAAAAAAAAAABAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPOEAAAAAAOEAAAAAAHCCAAAAABEBAAAAA
-
-[WorkState_v1_2.Frames.ChildFrames.Document-3]
-ptn_Child1=ViewFrame-0
-
-[WorkState_v1_2.Frames.ChildFrames.Document-3.ViewFrame-0]
-DocPathName=C:\PROGRA~2\ZiLOG\ZDSII_~1.2\src\boot\common\startups.asm
-DocTemplateIndex=0
-DocumentString=IDE.Document
 IsActiveChildFrame=True
 IsFrameVisible=True
-WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPIPPPPPPPBOPPPPPPKBAAAAAAKBAAAAAALFCAAAAAHBBAAAAA
+WindowPlacement=MCAAAAAACAAAAAAADAAAAAAAPPPPPPPPPPPPPPPPHPPPPPPPKNPPPPPPACAAAAAAACAAAAAAOPEAAAAAMGBAAAAA
 
+[bookmarks]
+..\HEATER~1\src\irq.c=509,1318

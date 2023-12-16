@@ -1,4 +1,4 @@
-///////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
 // irq.c
 //
 // Aeon Laboratories SC64 64-channel Servo controller
@@ -17,9 +17,9 @@
 
 // Store big strings in ROM to conserve RData and EData space.
 rom char FIRMWARE[]	= R"Aeon Laboratories SC64 ";
-rom char VERSION[]	= R"V.20171221-0000";
+rom char VERSION[]	= R"V.20220823-0000";
 
-#define SERNO					9
+#define SERNO					28
 
 // Compensation values (consolidated) for pre-amps & ADC
 // To calibrate, set Gain to 1.0 and Offset to 0.0
@@ -111,13 +111,169 @@ rom char VERSION[]	= R"V.20171221-0000";
 #define A2_OFFSET				2007.5
 #endif
 
-////// Dalhousie Servo Controller (PN DC-A)
-#if SERNO == 9
+////// Aeon CEGS 2 Servo Controller (PN DC-A)
+#if SERNO == 10
 #define ADC_OFFSET				0		// what ADC reports when the input is 0V.
-#define A1_GAIN					0.8871	// SERVO_I
-#define A1_OFFSET				101.0
-#define A2_GAIN					3.1667	// SERVO_V
-#define A2_OFFSET				1288.6
+#define A1_GAIN					1.1446	// SERVO_I
+#define A1_OFFSET				88.0
+#define A2_GAIN					2.0089	// SERVO_V
+#define A2_OFFSET				205.6
+#endif
+
+////// WHOI CEGS Servo Controller 1
+#if SERNO == 11
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.1811		// SERVO_I
+#define A1_OFFSET				95.0
+#define A2_GAIN					4.7619		// SERVO_V
+#define A2_OFFSET				1920.9
+#endif
+
+////// WHOI CEGS Servo Controller 2
+#if SERNO == 12
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					0.9859	// SERVO_I
+#define A1_OFFSET				108.0
+#define A2_GAIN					5.0		// SERVO_V
+#define A2_OFFSET				1953.0
+#endif
+
+////// SMSEGL 12X Servo Controller 1
+#if SERNO == 13
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					0.9402	// SERVO_I
+#define A1_OFFSET				82.7
+#define A2_GAIN					2.9060	// SERVO_V
+#define A2_OFFSET				1200.1
+#endif
+
+////// SMSEGL 12X Servo Controller 2
+#if SERNO == 14
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.1551	// SERVO_I
+#define A1_OFFSET				98.7
+#define A2_GAIN					2.9630	// SERVO_V
+#define A2_OFFSET				1069.6
+#endif
+
+////// SMSEGL LL6 Servo Controller
+#if SERNO == 15
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.2002	// SERVO_I
+#define A1_OFFSET				92.0
+#define A2_GAIN					2.7520	// SERVO_V
+#define A2_OFFSET				918.0
+#endif
+
+////// SMSEGL LL6 Servo Controller
+#if SERNO == 16
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.0703	// SERVO_I
+#define A1_OFFSET				88.1
+#define A2_GAIN					2.9208	// SERVO_V
+#define A2_OFFSET				1050.1
+#endif
+
+
+#if SERNO == 17
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.0783	// SERVO_I
+#define A1_OFFSET				89.4
+#define A2_GAIN					3.0127	// SERVO_V
+#define A2_OFFSET				1186.4
+#endif
+
+//////  Servo Controller
+#if SERNO == 18
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.0	// SERVO_I
+#define A1_OFFSET				0
+#define A2_GAIN					1.0	// SERVO_V
+#define A2_OFFSET				0.0
+#endif
+
+////// Servo Controller
+#if SERNO == 19
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.0	// SERVO_I
+#define A1_OFFSET				0
+#define A2_GAIN					1.0	// SERVO_V
+#define A2_OFFSET				0.0
+#endif
+
+//////  Servo Controller
+#if SERNO == 20
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.0338	// SERVO_I
+#define A1_OFFSET				88.6
+#define A2_GAIN					2.8133	// SERVO_V
+#define A2_OFFSET				920.6
+#endif
+
+//////  Servo Controller
+#if SERNO == 21
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.0218	// SERVO_I
+#define A1_OFFSET				90.2
+#define A2_GAIN					3.6088	// SERVO_V
+#define A2_OFFSET				1435.1
+#endif
+
+
+#if SERNO == 22
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.0241	// SERVO_I
+#define A1_OFFSET				102.4
+#define A2_GAIN					2.9737	// SERVO_V
+#define A2_OFFSET				1130.4
+#endif
+
+#if SERNO == 23
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.1432	// SERVO_I
+#define A1_OFFSET				96.3
+#define A2_GAIN					2.5579	// SERVO_V
+#define A2_OFFSET				821.3
+#endif
+
+#if SERNO == 24
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.2086	// SERVO_I
+#define A1_OFFSET				96.7
+#define A2_GAIN					2.3560	// SERVO_V
+#define A2_OFFSET				705.9
+#endif
+
+#if SERNO == 25
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.2026	// SERVO_I
+#define A1_OFFSET				97.6
+#define A2_GAIN					2.7187	// SERVO_V
+#define A2_OFFSET				829.5
+#endif
+
+#if SERNO == 26
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.1828	// SERVO_I
+#define A1_OFFSET				100.0
+#define A2_GAIN					2.9563	// SERVO_V
+#define A2_OFFSET				1076.7
+#endif
+
+#if SERNO == 27
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.0900	// SERVO_I
+#define A1_OFFSET				90.0
+#define A2_GAIN					2.8497	// SERVO_V
+#define A2_OFFSET				944.3
+#endif
+
+#if SERNO == 28
+#define ADC_OFFSET				0		// what ADC reports when the input is 0V.
+#define A1_GAIN					1.0585	// SERVO_I
+#define A1_OFFSET				95.2
+#define A2_GAIN					2.8666	// SERVO_V
+#define A2_OFFSET				952.1
 #endif
 
 #define CHANNELS				64
@@ -128,7 +284,7 @@ rom char VERSION[]	= R"V.20171221-0000";
 
 #define V_MIN					4500	// millivolts
 
-#define SKIP_INRUSH				10		// 100ths of a second ('elapsed' units)
+#define SKIP_INRUSH				20		// 100ths of a second ('elapsed' units)
 
 
 // The CO_MAX_RESERVE provides time for the "stop pulse"
@@ -196,6 +352,10 @@ int Ain[ANALOG_INPUTS];
 #define AdcServoCurrent			Ain[0]
 #define AdcServoVoltage			Ain[1]
 
+int AdcIn;
+int StabilityMeter;							// Performance metric
+
+
 volatile BOOL EnableControllerUpdate = TRUE;
 
 volatile BOOL EnableDatalogging;
@@ -246,16 +406,6 @@ void setCpw(int);
 // set defaults
 void init_irq()
 {
-	SET_VECTOR(TIMER0, isr_timer0);
-	EI_T0();
-
-	SET_VECTOR(TIMER1, isr_timer1);
-	EI_T1();
-	
-	ADC_SELECT(Ach[0]);
-	SET_VECTOR(ADC, isr_adc);
-	EI_ADC();
-	
 	do_CO = doNothing;
 	
 	CommandedChannel = CHANNEL_NONE;
@@ -265,9 +415,10 @@ void init_irq()
 	GoCommanded = FALSE;
 	Stopped = TRUE;
 	CpEnabled = FALSE;
-	StopOnLimit0 = TRUE;
+	
+	StopOnLimit0 = FALSE;
 	Limit0 = FALSE;
-	StopOnLimit1 = TRUE;
+	StopOnLimit1 = FALSE;
 	Limit1 = FALSE;
 	
 	StopOnMilliamps = 0;
@@ -275,6 +426,17 @@ void init_irq()
 	StopOnTimeout = 0;
 	Elapsed = 0;
 	Error = ERROR_NONE;	
+	
+	SET_VECTOR(TIMER0, isr_timer0);
+	SET_VECTOR(TIMER1, isr_timer1);
+	SET_VECTOR(ADC, isr_adc);
+
+	ADC_SELECT(Ach[0]);
+	adc_reset();
+
+	EI_T0();
+	EI_T1();
+	EI_ADC();
 }
 
 
@@ -366,8 +528,8 @@ void update_CO()
 void update_device()
 {
 	// update device state
-	Limit0 = LIMIT0_detected();
-	Limit1 = LIMIT1_detected();
+	Limit0 = StopOnLimit0 && LIMIT0_detected();
+	Limit1 = StopOnLimit1 && LIMIT1_detected();
 	Milliamps = A1_GAIN * (AdcServoCurrent - A1_OFFSET);
 	Vps = A2_GAIN * (AdcServoVoltage - A2_OFFSET);
 
@@ -376,14 +538,14 @@ void update_device()
 	else					mask_clr(Error, ERROR_LOW_POWER);
 
 	// why is this (necessarily) an error?
-	if (Limit0 && Limit1)	mask_set(Error, ERROR_BOTH_LIMITS);
-	else					mask_clr(Error, ERROR_BOTH_LIMITS);
+	//if (Limit0 && Limit1)	mask_set(Error, ERROR_BOTH_LIMITS);
+	//else					mask_clr(Error, ERROR_BOTH_LIMITS);
 	
 	// check for stop conditions
 	if 
 		(
-			(StopOnLimit0 && Limit0) ||
-			(StopOnLimit1 && Limit1) ||
+			(Limit0) ||
+			(Limit1) ||
 			(StopOnMilliamps > 0 && Elapsed > SKIP_INRUSH && Milliamps > StopOnMilliamps) ||
 			(StopOnTimeout > 0 && Elapsed >= StopOnTimeout)
 		)
@@ -401,20 +563,42 @@ void update_device()
 	}	
 }
 
-
 ///////////////////////////////////////////////////////
 void check_adc()
 {
 	static uint8_t achIndex;
-	int adcd;
-	if (AdcdSettling) return;
 	
-	adcd = ADCD;
-	if (ADCD_VALID(adcd))
-		adcd = (adcd >> 3) - ADC_OFFSET;
+	int prior_adc_in = AdcIn;
+	int stabilityTest;
+	static uint8_t stabilityCounter;
+	
+	if (AdcdSettling) return;	
+	AdcIn = ADCD;
+	
+	if (ADCD_VALID(AdcIn))
+	{		
+		AdcIn = (AdcIn >> 3) - ADC_OFFSET;	// ? AdcIn = (AdcIn >> 3) + ADC_OFFSET;
+		stabilityTest = AdcIn - prior_adc_in;
+		if (stabilityTest < 0) stabilityTest = -stabilityTest;
+
+		if (stabilityTest > ADC_DELTA_LIMIT)	// significantly different
+		{
+			stabilityCounter = 0;
+		}
+		else
+		{
+			++stabilityCounter;
+			++StabilityMeter;
+		}
+		
+		if (stabilityCounter < ADC_STABLE)		// unstable
+			return;								// take another reading
+		stabilityCounter = 0;
+	}	
 	else
-		adcd = ADC_OUTOFRANGE;
-	Ain[achIndex] = adcd;
+		AdcIn = ADC_OUTOFRANGE;
+	
+	Ain[achIndex] = AdcIn;
 	uint8CounterReset(&achIndex, ANALOG_INPUTS-1);
 	ADC_SELECT(Ach[achIndex]);
 	adc_reset();
@@ -468,117 +652,123 @@ void setCpw(int cpw)
 	Co = (float)cpw  * (T1_FREQ / 1000000.0);
 }
 
+void Stop()
+{
+	CpEnabled = FALSE;
+	GoCommanded = FALSE;
+}
+
+void Clear()
+{
+	Milliamps = 0;
+	Elapsed = 0.0;
+}
+
 ///////////////////////////////////////////////////////
 void do_commands()
 {
-	char c;
+	char c, c2;
 	int n;
 
-	while (!RxbEmpty())				// process a command
+	while (!RxbEmpty())					// process a command
 	{
-		c = getc();		
 		mask_clr(Error, ERROR_COMMAND);
+		GetInput();
+		c = Command[0];					// a command
+		c2 = Command[1];				// possibly a sub-command
 		
 		// single-byte commands
-		if (c == '\0')				// null command
+		if (c == '\0')					// null command
 		{
-			// (treat as single-byte command that does nothing)
+			// do nothing
 		}
-		else if (c == 'z')			// program data
+		else if (c == 'r')				// report
 		{
-			printromstr(FIRMWARE); printromstr(VERSION); endMessage();
-			printromstr(R"S/N:"); printi(SERNO, 4, ' '); endMessage();
-			printromstr(R"CPW_MIN:"); printi(CPW_MIN, 4, ' ');
-			printromstr(R"   CPW_MAX:"); printi(CPW_MAX, 6, ' '); endMessage();
-			endMessage();
+			if (NargPresent)			// set Datalogging interval
+			{
+				// rolls under to 0xFF (meaning "disable") if DatalogReset was 0
+				DatalogReset = TryInput(0, 255, ERROR_DATALOG, DatalogReset + 1, 0) - 1;
+				DatalogCount = 0;
+			}
+			else						// one-time report
+				report_device();
 		}
-		else if (c == 'h')			// report header
+		else if (c == 's')				// stop
 		{
-			report_header();
+			Stop();						// retains MilliAmps and Elapsed
 		}
-		else if (c == 's')			// stop
+		else if (c == 'g')				// go
 		{
-			CpEnabled = FALSE;
-			GoCommanded = FALSE;
+			Stop();
+			Clear();
+			if (NargPresent)			// it's a control pulse width
+				setCpw(TryInput(CPW_MIN, CPW_MAX, ERROR_CPW, Cpw, 0));
+			GoCommanded = TRUE;			
 		}
-		else if (c == '0')			// reset to center
+		else if (c == 'c')				// clear
+		{
+			Clear();
+		}
+		else if (c == 'n')				// select channel
+		{				
+			Stop();
+			Clear();
+			n = TryInput(0, CHANNELS - 1, ERROR_CHANNEL, Channel, 0);
+			if (!(Error & ERROR_CHANNEL))
+				CommandedChannel = n;				
+		}
+		else if (c == 'p')				// set control pulse width
+		{
+			setCpw(TryInput(CPW_MIN, CPW_MAX, ERROR_CPW, Cpw, 0));
+		}
+		else if (c == 'i')				// set current limit
+		{
+			StopOnMilliamps = TryInput(0, CURRENT_MAX, ERROR_ILIM, StopOnMilliamps, 0);
+		}
+		else if (c == 't')				// set timeout				
+		{
+			StopOnTimeout = TryInput(0, TIMEOUT_MAX, ERROR_TIMEOUT, StopOnTimeout, 2);
+		}
+		else if (c == 'l')				// (letter 'l', not number '1') set stop limits
+		{
+			mask_clr(Error, ERROR_LIMSW);
+			if (Narg == 10) {			//  10 == enable limit 0
+				StopOnLimit0 = TRUE;
+			} else if (Narg == 11) {	//  11 == enable limit 1
+				StopOnLimit1 = TRUE;
+			} else if (Narg == -10) {	// -10 == disable limit 0
+				StopOnLimit0 = FALSE;
+			} else if (Narg == -11) {	// -11 == disable limit 1
+				StopOnLimit1 = FALSE;
+			} else {
+				mask_set(Error, ERROR_LIMSW);
+			}
+		}				
+		else if (c == '0')				// reset to center
 		{
 			setCpw(CPW_CTR);
 		}
-		else						// multi-byte command
+		else if (c == 'h')				// report header
 		{
-			getArgs();
-
-			if (c == 'n')					// select channel
-			{				
-				n = tryArg(0, CHANNELS - 1, ERROR_CHANNEL, Channel, FALSE);
-				if (!(Error & ERROR_CHANNEL))
-				{
-					CommandedChannel = n;
-				
-					CpEnabled = FALSE;			// disable output
-					GoCommanded = FALSE;
-					
-					Milliamps = 0;
-					Elapsed = 0;
-				}
-			}
-			else if (c == 'r')				// report
-			{
-				if (argPresent())			// set Datalogging interval
-				{
-					// DatalogReset rolls under to 0xFF (meaning "disable") if command arg is 0
-					DatalogReset = tryArg(0, 255, ERROR_DATALOG, DatalogReset + 1, FALSE) - 1;
-					DatalogCount = 0;
-				}
-				else						// one-time report
-					report_device();
-			}
-			else if (c == 'p')				// set control pulse width
-			{
-				setCpw(tryArg(CPW_MIN, CPW_MAX, ERROR_CPW, Cpw, FALSE));
-			}
-			else if (c == 'g')				// go
-			{
-				if (argPresent())			// it's control pulse width
-					setCpw(tryArg(CPW_MIN, CPW_MAX, ERROR_CPW, Cpw, FALSE));
-				Elapsed = 0;
-				GoCommanded = TRUE;			
-			}
-			else if (c == 'i')				// set current limit
-			{
-				StopOnMilliamps = tryArg(0, CURRENT_MAX, ERROR_ILIM, StopOnMilliamps, FALSE);
-			}
-			else if (c == 't')				// set timeout				
-			{
-				StopOnTimeout = tryArg(0, TIMEOUT_MAX, ERROR_TIMEOUT, StopOnTimeout, TRUE);
-			}
-			else if (c == 'l')				// (letter 'l', not number '1') set stop limits
-			{
-				n = atoi();
-				mask_clr(Error, ERROR_LIMSW);
-				if (n == 10) {						//  10 == enable limit 0
-					StopOnLimit0 = TRUE;
-				} else if (n == 11) {				//  11 == enable limit 1
-					StopOnLimit1 = TRUE;
-				} else if (n == -10) {				// -10 == disable limit 0
-					StopOnLimit0 = FALSE;
-				} else if (n == -11) {				// -11 == disable limit 1
-					StopOnLimit1 = FALSE;
-				} else {
-					mask_set(Error, ERROR_LIMSW);
-				}
-			}				
-			else					// unrecognized command
-			{
-				mask_set(Error, ERROR_COMMAND);
-			}
+			report_header();
+		}
+		else if (c == 'z')				// program data
+		{
+			printromstr(FIRMWARE); printromstr(VERSION); endLine();
+			printromstr(R"S/N:"); printi(SERNO, 4, ' '); endLine();
+			printromstr(R"CPW_MIN:"); printi(CPW_MIN, 4, ' ');
+			printromstr(R" CPW_MAX:"); printi(CPW_MAX, 6, ' ');
+			endMessage();
+		}
+		else							// unrecognized command
+		{
+			mask_set(Error, ERROR_COMMAND);
 		}
 	}
 	
 	if (EnableDatalogging)
 	{
-		EnableDatalogging = FALSE;	// re-enabled later by isr_timer0
+		EnableDatalogging = FALSE;		// re-enabled later by isr_timer0
 		if (DatalogReset != 0xFF && uint8CounterReset(&DatalogCount, DatalogReset))
 			report_device();
 	}
@@ -587,7 +777,6 @@ void do_commands()
 
 ///////////////////////////////////////////////////////
 // 
-#pragma interrupt
 void interrupt isr_timer0()
 {
 	++T0Ticks;	
@@ -628,8 +817,7 @@ void interrupt isr_timer0()
 
 ///////////////////////////////////////////////////////
 // stop CO pulse
-#pragma interrupt
-void isr_timer1()
+void interrupt isr_timer1()
 {
 	SERVO_CP_low();
 }
@@ -637,9 +825,8 @@ void isr_timer1()
 
 ///////////////////////////////////////////////////////
 // ADC read complete...
-#pragma interrupt
-void isr_adc()
-{
+void interrupt isr_adc()
+{ 
 	if (AdcdSettling)
 		--AdcdSettling;
 }
